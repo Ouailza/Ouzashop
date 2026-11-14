@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>متجر الألعاب</title>
+  <meta name="theme-color" content="#0d1530">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Changa:wght@500;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=1">
+</head>
+<body>
+  <div id="boot" class="boot" role="status" aria-label="جارٍ التحميل"><span class="spinner"></span></div>
+
+  <!-- شاشة الدخول / إنشاء الحساب -->
+  <main id="auth-view" class="auth" hidden>
+    <section class="auth-card">
+      <div class="brand brand-lg">
+        <span class="brand-mark" data-icon="gamepad" data-size="26"></span>
+        <span class="brand-name" data-store-name>متجر الألعاب</span>
+      </div>
+      <p class="auth-lead">حسابات ألعاب وشحن بأسعار واضحة، والطلب في دقيقة.</p>
+
+      <div class="tabs" role="tablist" aria-label="الدخول أو إنشاء حساب">
+        <button type="button" role="tab" id="tab-login" aria-selected="true" aria-controls="form-login" class="tab is-active">تسجيل الدخول</button>
+        <button type="button" role="tab" id="tab-register" aria-selected="false" aria-controls="form-register" class="tab">إنشاء حساب</button>
+      </div>
+
+      <form id="form-login" class="form" role="tabpanel" aria-labelledby="tab-login" novalidate>
+        <label class="field">
+          <span>اسم المستخدم</span>
+          <input name="username" type="text" autocomplete="username" required maxlength="24" autocapitalize="none" spellcheck="false">
+        </label>
+        <label class="field">
+          <span>كلمة المرور</span>
+          <span class="pw">
+            <input name="password" type="password" autocomplete="current-password" required maxlength="128">
+            <button type="button" class="pw-toggle" aria-label="إظهار كلمة المرور" data-icon="eye"></button>
+          </span>
+        </label>
+        <p class="form-error" role="alert" hidden></p>
+        <button class="btn btn-primary btn-block" type="submit">دخول</button>
+      </form>
+
+      <form id="form-register" class="form" role="tabpanel" aria-labelledby="tab-register" hidden novalidate>
+        <label class="field">
+          <span>اسم المستخدم</span>
+          <input name="username" type="text" autocomplete="username" required minlength="3" maxlength="24" autocapitalize="none" spellcheck="false">
+          <small>من 3 إلى 24 حرفًا: حروف وأرقام ونقطة وشرطة.</small>
+        </label>
+        <label class="field">
+          <span>رقم الهاتف</span>
+          <input name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="05XXXXXXXX">
+        </label>
+        <label class="field">
+          <span>كلمة المرور</span>
+          <span class="pw">
+            <input name="password" type="password" autocomplete="new-password" required minlength="8" maxlength="128">
+            <button type="button" class="pw-toggle" aria-label="إظهار كلمة المرور" data-icon="eye"></button>
+          </span>
+          <small>8 أحرف على الأقل.</small>
+        </label>
+        <p class="form-error" role="alert" hidden></p>
+        <button class="btn btn-primary btn-block" type="submit">إنشاء الحساب</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- التطبيق بعد الدخول -->
+  <div id="app-view" hidden>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/" id="brand-home" aria-label="الصفحة الرئيسية">
+          <span class="brand-mark" data-icon="gamepad" data-size="22"></span>
+          <span class="brand-name" data-store-name>متجر الألعاب</span>
+        </a>
+        <nav class="topbar-actions" aria-label="الحساب">
+          <button type="button" id="btn-admin" class="btn btn-ghost" aria-label="لوحة التحكم" hidden>
+            <span data-icon="dashboard" data-size="18"></span><span class="label">لوحة التحكم</span>
+          </button>
+          <button type="button" id="btn-store" class="btn btn-ghost" aria-label="العودة إلى المتجر" hidden>
+            <span data-icon="store" data-size="18"></span><span class="label">المتجر</span>
+          </button>
+          <span class="user-chip" id="user-chip"></span>
+          <button type="button" id="btn-logout" class="btn btn-ghost btn-icon" aria-label="تسجيل الخروج" data-icon="logout"></button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- المتجر -->
+    <section id="feed-view" class="page">
+      <div class="filters">
+        <div class="segment" role="group" aria-label="نوع المنتج" id="kind-filter">
+          <button type="button" class="seg is-active" data-kind="">الكل</button>
+          <button type="button" class="seg" data-kind="account">حسابات</button>
+          <button type="button" class="seg" data-kind="topup">شحن</button>
+        </div>
+        <div class="chips" id="category-chips" role="group" aria-label="اللعبة"></div>
+      </div>
+      <div id="feed" class="feed"></div>
+      <div id="feed-status" class="feed-status" aria-live="polite"></div>
+      <div id="feed-sentinel" aria-hidden="true"></div>
+    </section>
+
+    <!-- لوحة الأدمن -->
+    <section id="admin-view" class="page page-wide" hidden>
+      <h1 class="page-title">لوحة التحكم</h1>
+      <div class="stats" id="admin-stats"></div>
+      <div class="tabs tabs-admin" role="tablist" aria-label="أقسام اللوحة" id="admin-tabs">
+        <button type="button" role="tab" class="tab is-active" data-tab="today" aria-selected="true">طلبات اليوم</button>
+        <button type="button" role="tab" class="tab" data-tab="all" aria-selected="false">كل الطلبات</button>
+        <button type="button" role="tab" class="tab" data-tab="products" aria-selected="false">المنتجات</button>
+        <button type="button" role="tab" class="tab" data-tab="form" aria-selected="false">إضافة منتج</button>
+      </div>
+      <div id="admin-panel"></div>
+    </section>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="/app.js?v=1" defer></script>
+</body>
+</html>
